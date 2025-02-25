@@ -13,7 +13,7 @@ import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@AnonymousAllowed
+//@AnonymousAllowed
 @Route(value = "tasks", layout = MainView.class)
 @ViewController("Task_.list")
 @ViewDescriptor("task-list-view.xml")
