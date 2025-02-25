@@ -2,16 +2,22 @@ package com.company.jmixpm.view.project;
 
 import com.company.jmixpm.entity.Project;
 
+import com.company.jmixpm.security.specific.JmixPmProjectArchiveContext;
 import com.company.jmixpm.view.main.MainView;
 
 import com.vaadin.flow.router.Route;
+import io.jmix.core.AccessManager;
 import io.jmix.core.DataManager;
+import io.jmix.core.LoadContext;
+import io.jmix.core.UnconstrainedDataManager;
 import io.jmix.flowui.Notifications;
 import io.jmix.flowui.component.grid.DataGrid;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.model.CollectionLoader;
 import io.jmix.flowui.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Route(value = "projects", layout = MainView.class)
 @ViewController("Project.list")
@@ -30,6 +36,11 @@ public class ProjectListView extends StandardListView<Project> {
     private Notifications notifications;
 
     private boolean hideArchived;
+
+    @Autowired
+    private AccessManager accessManager;
+    @Autowired
+    private UnconstrainedDataManager unconstrainedDataManager;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -56,4 +67,16 @@ public class ProjectListView extends StandardListView<Project> {
     public void setHideArchived(boolean hideArchived) {
         this.hideArchived = hideArchived;
     }
+
+    @Install(to = "projectsDataGrid.archive", subject = "enabledRule")
+    private boolean projectsDataGridArchiveEnabledRule() {
+        JmixPmProjectArchiveContext context = new JmixPmProjectArchiveContext();
+        accessManager.applyRegisteredConstraints(context);
+        return context.isPermitted();
+    }
+
+//    @Install(to = "projectsDl", target = Target.DATA_LOADER)
+//    private List<Project> projectsDlLoadDelegate(final LoadContext loadContext) {
+//        return unconstrainedDataManager.loadList(loadContext);
+//    }
 }

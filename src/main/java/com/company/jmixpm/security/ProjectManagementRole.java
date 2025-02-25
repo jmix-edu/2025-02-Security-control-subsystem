@@ -15,7 +15,7 @@ public interface ProjectManagementRole {
     @EntityPolicy(entityClass = Task.class, actions = EntityPolicyAction.ALL)
     void task();
 
-    @EntityAttributePolicy(entityClass = Project.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+//    @EntityAttributePolicy(entityClass = Project.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Project.class, actions = EntityPolicyAction.ALL)
     void project();
 
