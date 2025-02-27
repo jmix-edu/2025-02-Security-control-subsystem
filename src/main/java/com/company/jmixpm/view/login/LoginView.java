@@ -1,5 +1,6 @@
 package com.company.jmixpm.view.login;
 
+import com.company.jmixpm.entity.User;
 import com.company.jmixpm.view.public_.register.UserRegistrationView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.login.AbstractLogin;
@@ -12,6 +13,7 @@ import com.vaadin.flow.server.VaadinSession;
 import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
 import io.jmix.core.security.AccessDeniedException;
+import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.component.loginform.JmixLoginForm;
 import io.jmix.flowui.kit.component.ComponentUtils;
@@ -24,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -61,6 +64,8 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
     private String defaultPassword;
     @Autowired
     private ViewNavigators viewNavigators;
+    @Autowired
+    private CurrentAuthentication currentAuthentication;
 
     @Subscribe
     public void onInit(final InitEvent event) {
